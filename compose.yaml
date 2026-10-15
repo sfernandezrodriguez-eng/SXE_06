@@ -9,14 +9,15 @@ services:
     volumes:
       - odoo-db-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
+      start_period: 15s
     restart: always
 
   web:
-    image: odoo:latest
+    image: odoo:19.0
     container_name: lagares_odoo
     depends_on:
       db:
